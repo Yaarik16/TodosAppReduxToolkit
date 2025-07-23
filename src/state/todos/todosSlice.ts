@@ -10,7 +10,7 @@ export interface Todo {
   userId?: number;
   id: number;
   title: string;
-  completed: boolean;
+  completed?: boolean;
   tag?: string;
 }
 
@@ -60,7 +60,6 @@ const todosSlice = createSlice({
           state.items.unshift({
             id: Date.now(),
             title: action.payload.title,
-            completed: false,
             tag: action.payload.tag,
           });
         }
@@ -79,19 +78,9 @@ const todosSlice = createSlice({
 
 export const asyncAddTodo = createAsyncThunk(
   "notes/asyncAddTodo",
-  async ({
-    id,
-    title,
-    completed,
-    tag,
-  }: {
-    id: number;
-    title: string;
-    completed: boolean;
-    tag: string;
-  }) => {
+  async ({ id, title, tag }: { id: number; title: string; tag: string }) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    return { id, title, completed, tag };
+    return { id, title, tag };
   },
 );
 

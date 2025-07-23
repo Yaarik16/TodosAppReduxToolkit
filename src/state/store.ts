@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counter/counterSlice";
-import notesReducer from "./notes/notesSlice";
+import todosReducer from "./todos/todosSlice.ts";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage
 import { combineReducers } from "redux";
@@ -8,14 +8,14 @@ import { combineReducers } from "redux";
 // Combine reducers
 const rootReducer = combineReducers({
   counter: counterReducer,
-  notes: notesReducer,
+  todos: todosReducer,
 });
 
 // Persist config
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["notes"], // only notes slice will be persisted
+  whitelist: ["todos"], // only notes slice will be persisted
 };
 
 // Create persisted reducer

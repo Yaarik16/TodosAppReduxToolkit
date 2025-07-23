@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Notes.module.scss";
+import styles from "./Todos.module.scss";
 import { asyncAddTodo } from "../../state/todos/todosSlice.ts";
 import type { AppDispatch, RootState } from "../../state/store.ts";
 import { useSelector } from "react-redux";
@@ -31,7 +31,6 @@ const AddAndSearchNotesForm: React.FC<AddAndSearchNotesFormProps> = ({
       asyncAddTodo({
         id: Date.now(),
         title: noteText,
-        completed: false,
         tag: noteTag,
       }),
     );
@@ -41,36 +40,40 @@ const AddAndSearchNotesForm: React.FC<AddAndSearchNotesFormProps> = ({
   };
 
   return (
-    <>
+    <div className={styles["form-container"]}>
       <h2>Todos app</h2>
-      <div className={styles.form}>
-        <input
-          type="text"
-          placeholder="Type Todo"
-          value={noteText}
-          onChange={(e) => setNoteText(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Tag (optional)"
-          value={noteTag}
-          onChange={(e) => setNoteTag(e.target.value)}
-        />
-        <button onClick={submitClick}>Add todo</button>
-      </div>
+      <div className={styles["input-container"]}>
+        <div className={styles.form}>
+          <input
+            type="text"
+            placeholder="Type Todo"
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Tag (optional)"
+            value={noteTag}
+            onChange={(e) => setNoteTag(e.target.value)}
+          />
+          <button className={styles.btn} onClick={submitClick}>
+            Add todo
+          </button>
+        </div>
 
-      <input
-        type="text"
-        placeholder="Search..."
-        className={styles.search}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+        <input
+          type="text"
+          placeholder="Search..."
+          className={styles.search}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
       {isEmpty && <h4>You cannot submit an empty field</h4>}
       {isLoading && <h4>Working our magic...</h4>}
       {isError && <h4>This todo already exists in the list.</h4>}
-    </>
+    </div>
   );
 };
 
